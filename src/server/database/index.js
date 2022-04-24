@@ -2,7 +2,7 @@ import Sequelize from "sequelize";
 import configFile from "../config";
 import models from "../models";
 
-const env = process.env.NODE_ENV || "devlelopment";
+const env = process.env.NODE_ENV || "development";
 const config = configFile[env];
 
 const sequelize = new Sequelize(

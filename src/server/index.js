@@ -8,14 +8,19 @@ import helmet from "helmet";
 import compression from "compression";
 
 // services
-import services from "./services";
+import servicesLoader from "./services";
+
+const utils = {
+  db,
+};
+
+const services = servicesLoader(utils);
 
 const root = path.join(__dirname, "../../");
 
 const app = express();
 
 if (process.env.NODE_ENV === "production") {
-  console.log("run");
   app.use(helmet());
   app.use(
     helmet.contentSecurityPolicy({
