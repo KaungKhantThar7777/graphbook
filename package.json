@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "webpack serve --devtool inline-source-map --hot --config webpack.client.config.js",
     "client:build": "webpack --config webpack.client.build.config.js",
-    "server": "nodemon --exec babel-node --watch src/server src/server/index.js"
+    "server": "nodemon --exec babel-node --plugins require-context-hook --watch src/server src/server/index.js"
   },
   "keywords": [],
   "author": "",
@@ -20,9 +20,12 @@
     "express": "^4.17.3",
     "graphql": "^16.3.0",
     "helmet": "^5.0.2",
+    "mysql2": "^2.3.3",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-helmet": "^6.1.0",
+    "sequelize": "^6.19.0",
+    "sequelize-cli": "^6.4.1",
     "winston": "^3.7.2"
   },
   "devDependencies": {
@@ -31,6 +34,7 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "babel-loader": "^8.2.5",
+    "babel-plugin-require-context-hook": "^1.0.0",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.1",
     "file-loader": "^6.2.0",

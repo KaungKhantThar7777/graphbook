@@ -1,5 +1,6 @@
 import express, { application } from "express";
 import path from "path";
+import db from "./database";
 
 // middlewares
 import cors from "cors";
