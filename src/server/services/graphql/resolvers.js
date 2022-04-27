@@ -13,6 +13,11 @@ export default function resolver() {
       },
     },
     Chat: {
+      lastMessage(chat, args, context) {
+        return chat
+          .getMessages({ limit: 1, order: [["id", "DESC"]] })
+          .then((message) => message[0]);
+      },
       messages(chat, args, context) {
         return chat.getMessages({ order: [["id", "asc"]] });
       },
@@ -34,7 +39,7 @@ export default function resolver() {
           if (!users.length) {
             return [];
           }
-          console.log(users);
+
           const usersRow = users[0];
           return Chat.findAll({
             include: [
@@ -76,7 +81,7 @@ export default function resolver() {
           });
         });
       },
-      addPost(root, { post, user }, context) {
+      addPost(root, { post }, context) {
         return User.findAll().then((users) => {
           const usersRow = users[0];
 

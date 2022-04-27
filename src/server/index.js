@@ -38,12 +38,11 @@ if (process.env.NODE_ENV === "production") {
     })
   );
 }
-
 app.use(compression());
 app.use(cors());
 
-app.use("/", express.static(path.join(root, "/dist/client")));
-app.use("/uploads", express.static(path.join(root, "/uploads")));
+app.use("/", express.static(path.join(root, "dist/client")));
+app.use("/uploads", express.static(path.join(root, "uploads")));
 
 const serviceNames = Object.keys(services);
 

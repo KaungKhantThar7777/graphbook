@@ -22,6 +22,7 @@ const typeDefinitions = `
         id: Int
         messages: [Message]
         users: [User]
+        lastMessage: Message
     }
 
     type RootQuery{
@@ -49,7 +50,7 @@ const typeDefinitions = `
     type RootMutation{
         addPost(
             post:PostInput!
-            user:UserInput!
+           
         ):Post
         addChat(chat:ChatInput!):Chat
         addMessage(message: MessageInput!):Message
