@@ -25,6 +25,7 @@
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-helmet": "^6.1.0",
+    "react-infinite-scroll-component": "^6.1.0",
     "sequelize": "^6.19.0",
     "sequelize-cli": "^6.4.1",
     "winston": "^3.7.2"

@@ -1,14 +1,17 @@
-import { useQuery, gql, useMutation } from "@apollo/client";
 import React, { useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useQuery, gql, useMutation } from "@apollo/client";
 
 const GET_POSTS = gql`
-  query {
-    posts {
-      id
-      text
-      user {
-        avatar
-        username
+  query postsFeed($page: Int, $limit: Int) {
+    postsFeed(page: $page, limit: $limit) {
+      posts {
+        id
+        text
+        user {
+          avatar
+          username
+        }
       }
     }
   }
@@ -28,16 +31,51 @@ const ADD_POST = gql`
 `;
 
 const Feed = () => {
-  const { data, loading, error } = useQuery(GET_POSTS, {
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(0);
+  const { data, loading, error, fetchMore } = useQuery(GET_POSTS, {
     pollInterval: 5000,
+    variables: {
+      page: 0,
+      limit: 10,
+    },
   });
   const [postContent, setPostContent] = useState("");
+
+  const loadMore = (fetchMore) => {
+    const self = this;
+
+    fetchMore({
+      variables: {
+        page: page + 1,
+      },
+      updateQuery(previousResult, { fetchMoreResult }) {
+        if (!fetchMoreResult.postsFeed.posts.length) {
+          setHasMore(false);
+          return previousResult;
+        }
+
+        setPage((page) => page + 1);
+        const newData = {
+          postsFeed: {
+            __typename: "PostFeed",
+            posts: [
+              ...previousResult.postsFeed.posts,
+              ...fetchMoreResult.postsFeed.posts,
+            ],
+          },
+        };
+        return newData;
+      },
+    });
+  };
 
   const [addPost] = useMutation(ADD_POST, {
     update(cache, { data: { addPost } }) {
       cache.modify({
         fields: {
-          posts(existingPosts = []) {
+          postsFeed(existingPostsFeed) {
+            const { posts: existingPosts } = existingPostsFeed;
             const newPostRef = cache.writeFragment({
               data: addPost,
               fragment: gql`
@@ -48,7 +86,10 @@ const Feed = () => {
               `,
             });
 
-            return [newPostRef, ...existingPosts];
+            return {
+              ...existingPostsFeed,
+              posts: [newPostRef, ...existingPosts],
+            };
           },
         },
       });
@@ -78,7 +119,8 @@ const Feed = () => {
   if (loading) return <h1>Loading...</h1>;
   if (error) return <h1>{error.message}</h1>;
 
-  const { posts } = data;
+  const { postsFeed } = data;
+  const { posts } = postsFeed;
 
   return (
     <div className="container">
@@ -93,18 +135,29 @@ const Feed = () => {
         </form>
       </div>
       <div className="feed">
-        {posts.map((post) => (
-          <div
-            key={post.id}
-            className={"post" + (post.id < 0 ? "optimistic" : "")}
-          >
-            <div className="header">
-              <img src={post.user.avatar} />
-              <h2>{post.user.username}</h2>
+        <InfiniteScroll
+          dataLength={posts.length}
+          next={() => loadMore(fetchMore)}
+          hasMore={hasMore}
+          loader={
+            <div className="loader" key={"loader"}>
+              Loading ...
             </div>
-            <p className="content">{post.text}</p>
-          </div>
-        ))}
+          }
+        >
+          {posts.map((post) => (
+            <div
+              key={post.id}
+              className={"post" + (post.id < 0 ? "optimistic" : "")}
+            >
+              <div className="header">
+                <img src={post.user.avatar} />
+                <h2>{post.user.username}</h2>
+              </div>
+              <p className="content">{post.text}</p>
+            </div>
+          ))}
+        </InfiniteScroll>
       </div>
     </div>
   );

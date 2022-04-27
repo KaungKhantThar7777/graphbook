@@ -24,9 +24,13 @@ const typeDefinitions = `
         users: [User]
         lastMessage: Message
     }
+    type PostFeed{
+        posts:[Post]
+    }
 
     type RootQuery{
         posts:[Post]
+        postsFeed(page: Int, limit: Int):PostFeed
         chats:[Chat]
         chat(chatId: Int):Chat
     }
