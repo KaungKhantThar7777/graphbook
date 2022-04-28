@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { gql, useQuery, useMutation } from "@apollo/client";
+import Loading from "./components/loading";
+import Error from "./components/error";
 
 const GET_CHAT = gql`
   query GetSingleChat($chatId: Int) {
@@ -80,13 +82,15 @@ const Chat = (props) => {
   if (loading)
     return (
       <div className="chatWindow">
-        <p>Loading...</p>
+        <Loading />
       </div>
     );
   if (error)
     return (
       <div className="chatWindow">
-        <p>{error.message}</p>
+        <Error>
+          <p>{error.message}</p>
+        </Error>
       </div>
     );
 
