@@ -34,6 +34,15 @@ p {
 }
 .post .header {
   height: 60px;
+  display: flex;
+  align-items: center;
+}
+.post .header .dropdown {
+  margin-left: auto;
+  margin-right: 30px;
+}
+.post .header .dropdown .trigger {
+  text-align: right;
 }
 .post .header > *,
 .chats .chat .header > * {

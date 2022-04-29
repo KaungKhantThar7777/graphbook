@@ -51,6 +51,9 @@ const typeDefinitions = `
         text: String!
         chatId: Int!
     }
+    type DeleteResponse{
+        success: Boolean
+    }
     type RootMutation{
         addPost(
             post:PostInput!
@@ -58,6 +61,7 @@ const typeDefinitions = `
         ):Post
         addChat(chat:ChatInput!):Chat
         addMessage(message: MessageInput!):Message
+        deletePost(postId: Int!):DeleteResponse
     }
 
     schema {

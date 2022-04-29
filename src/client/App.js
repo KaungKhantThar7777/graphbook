@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-import "../../assets/css/style.css";
 import Chats from "./Chats";
 import Feed from "./Feed";
+import "../../assets/css/style.css";
+import "./components/fontawesome";
 
 const App = () => {
   return (
