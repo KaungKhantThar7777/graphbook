@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import Chats from "./Chats";
 import Feed from "./Feed";
+import LoginRegisterForm from "./components/loginRegister";
 import "../../assets/css/style.css";
 import "./components/fontawesome";
 import Bar from "./components/bar";
 import { UserProvider } from "./components/context/user";
 
 const App = () => {
+  const [loggedIn, setLoggedIn] = useState(
+    () => !!localStorage.getItem("gb_token")
+  );
   return (
     <div className="container">
       <Helmet>
@@ -19,10 +23,15 @@ your friends on Graphbook"
         />
       </Helmet>
       <UserProvider>
-        <Bar />
-        <Feed />
-        <Chats />
+        {loggedIn && (
+          <div>
+            <Bar />
+            <Feed />
+            <Chats />
+          </div>
+        )}
       </UserProvider>
+      {!loggedIn && <LoginRegisterForm changeLoginState={setLoggedIn} />}
     </div>
   );
 };

@@ -382,3 +382,13 @@ form [type="submit"] {
   width: 100%;
   background-color: #fff;
 }
+
+.login form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login form input {
+  padding: 10px;
+  margin-bottom: 20px;
+}

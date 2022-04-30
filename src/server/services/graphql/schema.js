@@ -58,6 +58,9 @@ const typeDefinitions = `
     type DeleteResponse{
         success: Boolean
     }
+    type Auth{
+        token: String
+    }
     type RootMutation{
         addPost(
             post:PostInput!
@@ -66,6 +69,8 @@ const typeDefinitions = `
         addChat(chat:ChatInput!):Chat
         addMessage(message: MessageInput!):Message
         deletePost(postId: Int!):DeleteResponse
+        login(email: String!, password: String!):Auth
+        signup(email: String!, username: String!, password:String!):Auth
     }
 
     schema {
