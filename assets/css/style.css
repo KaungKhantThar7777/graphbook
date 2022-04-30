@@ -1,7 +1,3 @@
-* {
-  box-sizing: border-box;
-}
-
 body {
   background-color: #f6f7f9;
   margin: 0;
@@ -10,7 +6,6 @@ body {
 p {
   margin-bottom: 0;
 }
-
 .container {
   max-width: 500px;
   margin: 70px auto 0 auto;
@@ -23,32 +18,16 @@ p {
 .post {
   background-color: #fff;
   margin: 5px;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-.post img {
-  display: block;
-  width: 100%;
-  object-fit: cover;
 }
 .post .header {
   height: 60px;
-  display: flex;
-  align-items: center;
-}
-.post .header .dropdown {
-  margin-left: auto;
-  margin-right: 30px;
-}
-.post .header .dropdown .trigger {
-  text-align: right;
 }
 .post .header > *,
 .chats .chat .header > * {
   display: inline-block;
   vertical-align: middle;
 }
+
 .post .header img,
 .chats .chat .header img {
   width: 50px;
@@ -65,12 +44,11 @@ p {
   padding: 5px;
   min-height: 50px;
 }
-
 form {
   padding-bottom: 20px;
 }
 form textarea {
-  width: 100%;
+  width: calc(100% - 20px);
   padding: 10px;
   border-color: #bbb;
 }
@@ -113,32 +91,31 @@ form [type="submit"] {
 
 .chats {
   background-color: #eee;
-  width: 250px;
-  height: 100%;
+  width: 200px;
+  height: calc(100% - 50px);
   position: fixed;
-  top: 0;
+  top: 50px;
   right: 0;
   border-left: 1px solid #c3c3c3;
 }
+
 .chats .chat {
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px;
 }
 
 .chats .chat .header > div {
+  width: calc(100% - 65px);
   font-size: 16px;
   margin-left: 5px;
 }
-.chats .chat h2,
-.chats .chat span {
+
+.chats .chat .header h2,
+.chats .chat .header span {
   color: #333;
   font-size: 16px;
   margin: 0;
-  margin-bottom: 10px;
 }
+
 .chats .chat .header span {
   color: #333;
   font-size: 12px;
@@ -155,8 +132,10 @@ form [type="submit"] {
 }
 
 .chatWindow .header {
+  width: calc(100% - 10px);
   background-color: #c3c3c3;
-  padding: 10px;
+  padding: 5px;
+  height: 20px;
 }
 
 .chatWindow .header .close {
@@ -173,7 +152,7 @@ form [type="submit"] {
 
 .chatWindow .messages {
   overflow-y: scroll;
-  height: calc(100% - 75px);
+  height: calc(100% - 50px);
 }
 
 .chatWindow .messages .message {
@@ -181,9 +160,7 @@ form [type="submit"] {
   border: 1px solid #4079f3;
   margin: 2px;
   border-radius: 5px;
-
-  margin: 5px 0px;
-  padding: 5px;
+  padding: 2px;
 }
 
 .chatWindow .messages .message.left {
@@ -200,22 +177,24 @@ form [type="submit"] {
 
 .openChats {
   position: fixed;
-  right: 250px;
+  right: 200px;
   width: calc(100% - 200px);
   bottom: 0;
 }
 
 .wrapper {
   height: 100%;
+  position: fixed;
   right: 0;
   top: 0;
 }
 
 .chatWindow .input input {
+  width: calc(100% - 4px);
   border: none;
-  padding: 10px;
-  width: 100%;
+  padding: 2px;
 }
+
 .chatWindow .input input:focus {
   outline: none;
 }
@@ -229,10 +208,10 @@ form [type="submit"] {
 
 @-webkit-keyframes bounce {
   0% {
-    -webkit-animation: scale(0);
+    -webkit-transform: scale(0);
   }
   100% {
-    -webkit-animation: scale(1);
+    -webkit-transform: scale(1);
     opacity: 0;
   }
 }
@@ -254,9 +233,152 @@ form [type="submit"] {
   padding: 5px;
   max-width: 400px;
 }
+
 .error.message {
   border-radius: 5px;
   background-color: #fff7f5;
   border: 1px solid #ff9566;
   width: 100%;
+}
+
+.dropdown .trigger > * {
+  display: block;
+  z-index: 1;
+}
+
+.dropdown .content {
+  position: absolute;
+}
+
+.dropdown div {
+  position: relative;
+}
+
+.post .header .dropdown {
+  float: right;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.post .header .dropdown:after {
+  height: 100%;
+  content: "";
+  font-size: 0;
+  vertical-align: middle;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.post .header .dropdown .content {
+  background-color: #fff;
+  border: 1px solid #333;
+  width: 150px;
+  text-align: center;
+  right: 0;
+}
+
+.dropdown button {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #333;
+  padding: 3px;
+}
+
+.dropdown button:last-child {
+  border-bottom: none;
+}
+
+.post .postForm {
+  padding: 10px;
+}
+
+.post .postForm form {
+  padding-bottom: 40px;
+}
+
+.topbar {
+  width: 100%;
+  left: 0;
+  height: 50px;
+  background-color: #6ca6fd;
+  position: fixed;
+  top: 0;
+  z-index: 5;
+}
+
+.inner {
+  width: 800px;
+  height: 100%;
+  margin: auto;
+  position: relative;
+}
+
+.topbar .inner .search {
+  height: calc(100% - 30px);
+  padding: 10px;
+  width: 50%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.topbar .inner .search input {
+  border: none;
+  height: 100%;
+  padding: 5px 10px;
+  width: 100%;
+  outline: none;
+}
+
+.topbar .inner .user {
+  position: absolute;
+  right: 0;
+  display: inline-block;
+  height: 100%;
+}
+
+.topbar .buttons {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  height: calc(100% - 10px);
+}
+
+.topbar .buttons > * {
+  height: 100%;
+  margin-right: 5px;
+  border: none;
+  border-radius: 5px;
+}
+
+.topbar .inner .user > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.topbar .inner .user img {
+  height: calc(100% - 10px);
+  margin: 5px;
+  border: none;
+  min-width: 40px;
+  background-color: #ccc;
+}
+
+.topbar .error.message {
+  margin: 0;
+  display: inline-block;
+}
+
+.topbar .search .result {
+  width: calc(100% - 2px);
+  border: 1px solid #c3c3c3;
+  margin-top: 1px;
+}
+
+.topbar .search .result .user {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  background-color: #fff;
 }

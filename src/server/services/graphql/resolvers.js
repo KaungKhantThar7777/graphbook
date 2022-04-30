@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import logger from "../../helpers/logger";
 
 export default function resolver() {
@@ -31,6 +32,34 @@ export default function resolver() {
       },
     },
     RootQuery: {
+      usersSearch(root, { page, limit, text }, context) {
+        if (text.length < 3) {
+          return {
+            users: [],
+          };
+        }
+        let skip = 0;
+
+        if (page && limit) {
+          skip = page * limit;
+        }
+        let query = {
+          order: [["createdAt", "DESC"]],
+          offset: skip,
+        };
+
+        if (limit) {
+          query.limit = limit;
+        }
+        query.where = {
+          username: {
+            [Op.like]: `%${text}%`,
+          },
+        };
+        return {
+          users: User.findAll(query),
+        };
+      },
       postsFeed(root, { page, limit }, context) {
         let skip = 0;
         if (page && limit) {

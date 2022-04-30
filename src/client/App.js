@@ -4,6 +4,8 @@ import Chats from "./Chats";
 import Feed from "./Feed";
 import "../../assets/css/style.css";
 import "./components/fontawesome";
+import Bar from "./components/bar";
+import { UserProvider } from "./components/context/user";
 
 const App = () => {
   return (
@@ -16,8 +18,11 @@ const App = () => {
 your friends on Graphbook"
         />
       </Helmet>
-      <Feed />
-      <Chats />
+      <UserProvider>
+        <Bar />
+        <Feed />
+        <Chats />
+      </UserProvider>
     </div>
   );
 };

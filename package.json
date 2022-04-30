@@ -47,6 +47,7 @@
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.6.0",
     "nodemon": "^2.0.15",
+    "react-styleguidist": "^11.2.0",
     "style-loader": "^3.3.1",
     "url-loader": "^4.1.1",
     "webpack": "^5.72.0",

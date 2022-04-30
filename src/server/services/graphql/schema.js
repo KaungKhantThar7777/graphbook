@@ -28,11 +28,15 @@ const typeDefinitions = `
         posts:[Post]
     }
 
+    type UsersSearch{
+        users:[User]
+    }
     type RootQuery{
         posts:[Post]
         postsFeed(page: Int, limit: Int):PostFeed
         chats:[Chat]
         chat(chatId: Int):Chat
+        usersSearch(page: Int, limit: Int, text:String!):UsersSearch
     }
 
 
