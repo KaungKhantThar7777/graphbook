@@ -1,26 +1,20 @@
-import React, { createContext } from "react";
-const { Provider } = createContext();
+import React from "react";
+
 import { ApolloConsumer } from "@apollo/client";
-
-export const UserProvider = ({ children }) => {
-  const user = {
-    username: "Kaung Khant Thar",
-    avatar: "/uploads/avatar1..png",
-  };
-
-  return <Provider value={user}>{children}</Provider>;
-};
+import { GET_CURRENT_USER } from "../../apollo/queries/currentUser";
 
 export const UserConsumer = ({ children }) => (
   <ApolloConsumer>
     {(client) => {
+      const result = client.readQuery({
+        query: GET_CURRENT_USER,
+      });
       // client.readQuery
-      const user = {
-        username: "Kaung Khant Thar",
-        avatar: "/uploads/avatar1.png",
-      };
+
       return React.Children.map(children, (child) => {
-        return React.cloneElement(child, { user });
+        return React.cloneElement(child, {
+          user: result?.currentUser ? result.currentUser : null,
+        });
       });
     }}
   </ApolloConsumer>

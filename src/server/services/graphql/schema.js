@@ -1,4 +1,5 @@
 const typeDefinitions = `
+    directive @auth on QUERY | FIELD_DEFINITION | FIELD
     type Post{
         id: Int
         text: String
@@ -32,9 +33,10 @@ const typeDefinitions = `
         users:[User]
     }
     type RootQuery{
+        currentUser: User @auth
         posts:[Post]
-        postsFeed(page: Int, limit: Int):PostFeed
-        chats:[Chat]
+        postsFeed(page: Int, limit: Int):PostFeed @auth
+        chats:[Chat] @auth
         chat(chatId: Int):Chat
         usersSearch(page: Int, limit: Int, text:String!):UsersSearch
     }
