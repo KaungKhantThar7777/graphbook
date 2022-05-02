@@ -4,9 +4,11 @@ import { withApollo } from "@apollo/client/react/hoc";
 import Chats from "./Chats";
 import Feed from "./Feed";
 import LoginRegisterForm from "./components/loginRegister";
-import "../../assets/css/style.css";
 import "./components/fontawesome";
 import Bar from "./components/bar";
+
+import "../../assets/css/style.css";
+import "cropperjs/dist/cropper.css";
 
 import { useCurrentUser } from "./apollo/queries/currentUser";
 import Loading from "./components/loading";

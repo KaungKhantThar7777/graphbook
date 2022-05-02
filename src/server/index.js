@@ -1,4 +1,5 @@
-import express, { application } from "express";
+import express from "express";
+import { graphqlUploadExpress } from "graphql-upload";
 import path from "path";
 import db from "./database";
 
@@ -50,6 +51,7 @@ for (let name of serviceNames) {
   if (name === "graphql") {
     (async () => {
       await services[name].start();
+      app.use(graphqlUploadExpress());
       services[name].applyMiddleware({ app });
     })();
   } else {

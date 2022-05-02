@@ -1,5 +1,13 @@
 const typeDefinitions = `
     directive @auth on QUERY | FIELD_DEFINITION | FIELD
+    scalar Upload
+
+    type File {
+        filename: String!
+        mimetype: String!
+        encoding: String!
+        url: String!
+    }
     type Post{
         id: Int
         text: String
@@ -64,6 +72,9 @@ const typeDefinitions = `
         token: String
     }
     type RootMutation{
+        uploadAvatar(
+            file: Upload!
+        ):File @auth
         addPost(
             post:PostInput!
            

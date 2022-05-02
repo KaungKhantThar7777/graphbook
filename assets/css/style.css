@@ -419,3 +419,41 @@ form [type="submit"] {
   float: right;
   margin-top: 10px;
 }
+
+.drop {
+  height: calc(100% - 70px);
+  width: calc(100% - 20px);
+  background-color: #b9d5ff;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drop p {
+  margin-top: 0;
+  text-align: center;
+}
+
+button.cancelUpload {
+  border: none;
+  background-color: #6ca6fd;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  float: left;
+  margin-top: 10px;
+}
+
+button.uploadAvatar {
+  border: none;
+  background-color: #6ca6fd;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  float: right;
+  margin-top: 10px;
+}

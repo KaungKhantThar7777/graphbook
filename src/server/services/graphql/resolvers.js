@@ -1,6 +1,18 @@
 import JWT from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { Op } from "sequelize";
+import { GraphQLUpload } from "graphql-upload";
+import aws from "aws-sdk";
+
+const s3 = new aws.S3({
+  signatureVersion: "v4",
+  region: "ap-southeast-1",
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
+});
+
 import logger from "../../helpers/logger";
 
 const { JWT_SECRET } = process.env;
@@ -8,6 +20,7 @@ export default function resolver() {
   const { db } = this;
   const { Post, User, Chat, Message } = db.models;
   const resolvers = {
+    Upload: GraphQLUpload,
     Message: {
       user(message, args, context) {
         return message.getUser();
@@ -117,6 +130,34 @@ export default function resolver() {
       },
     },
     RootMutation: {
+      async uploadAvatar(root, { file }, context) {
+        const { createReadStream, filename, mimetype, encoding } = await file;
+
+        const bucket = "graph-book";
+        const params = {
+          Bucket: bucket,
+          Key: `${context.user.id}/${filename}`,
+          ACL: "public-read",
+          Body: createReadStream(),
+        };
+        const response = await s3.upload(params).promise();
+        console.log(response);
+        return User.update(
+          {
+            avatar: response.Location,
+          },
+          {
+            where: {
+              id: context.user.id,
+            },
+          }
+        ).then(() => {
+          return {
+            filename,
+            url: response.Location,
+          };
+        });
+      },
       signup(root, { email, username, password }, context) {
         return User.findAll({
           where: {
