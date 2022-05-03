@@ -9,6 +9,7 @@ export const UserConsumer = ({ children }) => (
       const result = client.readQuery({
         query: GET_CURRENT_USER,
       });
+
       // client.readQuery
 
       return React.Children.map(children, (child) => {

@@ -10,6 +10,7 @@ import {
   getAddPostConfig,
   useAddPostMutation,
 } from "./apollo/mutations/addPost";
+import FeedList from "./components/post/feedlist";
 
 const Feed = () => {
   const [hasMore, setHasMore] = useState(true);
@@ -22,34 +23,6 @@ const Feed = () => {
     },
   });
   const [postContent, setPostContent] = useState("");
-
-  const loadMore = (fetchMore) => {
-    const self = this;
-
-    fetchMore({
-      variables: {
-        page: page + 1,
-      },
-      updateQuery(previousResult, { fetchMoreResult }) {
-        if (!fetchMoreResult.postsFeed.posts.length) {
-          setHasMore(false);
-          return previousResult;
-        }
-
-        setPage((page) => page + 1);
-        const newData = {
-          postsFeed: {
-            __typename: "PostFeed",
-            posts: [
-              ...previousResult.postsFeed.posts,
-              ...fetchMoreResult.postsFeed.posts,
-            ],
-          },
-        };
-        return newData;
-      },
-    });
-  };
 
   const [addPost] = useAddPostMutation(postContent);
 
@@ -83,22 +56,7 @@ const Feed = () => {
           <input type="submit" value="Submit" />
         </form>
       </div>
-      <div className="feed">
-        <InfiniteScroll
-          dataLength={posts.length}
-          next={() => loadMore(fetchMore)}
-          hasMore={hasMore}
-          loader={
-            <div className="loader" key={"loader"}>
-              Loading ...
-            </div>
-          }
-        >
-          {posts.map((post) => (
-            <Post key={post.id} post={post} />
-          ))}
-        </InfiniteScroll>
-      </div>
+      <FeedList posts={posts} fetchMore={fetchMore} />
     </div>
   );
 };

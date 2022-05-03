@@ -48,6 +48,13 @@ export default function resolver() {
       },
     },
     RootQuery: {
+      user(root, { username }, context) {
+        return User.findOne({
+          where: {
+            username,
+          },
+        });
+      },
       currentUser(root, args, context) {
         return context.user;
       },
@@ -79,7 +86,7 @@ export default function resolver() {
           users: User.findAll(query),
         };
       },
-      postsFeed(root, { page, limit }, context) {
+      postsFeed(root, { page, limit, username }, context) {
         let skip = 0;
         if (page && limit) {
           skip = page * limit;
@@ -94,6 +101,10 @@ export default function resolver() {
           query.limit = limit;
         }
 
+        if (username) {
+          query.include = [{ model: User }];
+          query.where = { "$User.username$": username };
+        }
         return {
           posts: Post.findAll(query),
         };

@@ -7,6 +7,7 @@ const UserBar = ({ user }) => {
     setIsOpen(!isOpen);
   };
   if (!user) return null;
+
   return (
     <div className="user">
       <img

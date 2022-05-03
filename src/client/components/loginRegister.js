@@ -11,7 +11,7 @@ const Form = ({ changeLoginState, isLogin }) => {
   const [login, { loading, error }] = isLogin
     ? useLoginMutation()
     : useSignupMutation();
-
+  console.log(error);
   const onSubmit = (event) => {
     event.preventDefault();
     login({
@@ -64,6 +64,7 @@ const Form = ({ changeLoginState, isLogin }) => {
 
 const LoginRegisterForm = ({ changeLoginState }) => {
   const [showLogin, setShowLogin] = useState(true);
+
   return (
     <div className="authModal">
       <div>

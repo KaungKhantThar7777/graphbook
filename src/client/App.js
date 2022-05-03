@@ -1,16 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Helmet } from "react-helmet";
 import { withApollo } from "@apollo/client/react/hoc";
-import Chats from "./Chats";
-import Feed from "./Feed";
-import LoginRegisterForm from "./components/loginRegister";
-import "./components/fontawesome";
-import Bar from "./components/bar";
-
-import "../../assets/css/style.css";
 import "cropperjs/dist/cropper.css";
-
+import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
+import Router from "./router";
+import "../../assets/css/style.css";
 import { useCurrentUser } from "./apollo/queries/currentUser";
+import "./components/fontawesome";
 import Loading from "./components/loading";
 
 const App = ({ client }) => {
@@ -52,7 +47,8 @@ your friends on Graphbook"
         />
       </Helmet>
 
-      {loggedIn && (
+      <Router loggedIn={loggedIn} changeLoginState={handleLogin} />
+      {/* {loggedIn && (
         <div>
           <Bar changeLoginState={handleLogin} />
           <Feed />
@@ -60,7 +56,7 @@ your friends on Graphbook"
         </div>
       )}
 
-      {!loggedIn && <LoginRegisterForm changeLoginState={setLoggedIn} />}
+      {!loggedIn && <LoginRegisterForm changeLoginState={setLoggedIn} />} */}
     </div>
   );
 };
